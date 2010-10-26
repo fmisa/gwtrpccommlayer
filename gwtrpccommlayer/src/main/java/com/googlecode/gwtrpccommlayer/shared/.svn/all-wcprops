@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/8/trunk/gwtrpccommlayer/src/com/seguedevelopment/gwtrpccommlayer/shared
+END
+GwtRpcCommLayerPojoRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/!svn/ver/3/trunk/gwtrpccommlayer/src/com/seguedevelopment/gwtrpccommlayer/shared/GwtRpcCommLayerPojoRequest.java
+END
+GwtRpcCommLayerPojoConstants.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/!svn/ver/3/trunk/gwtrpccommlayer/src/com/seguedevelopment/gwtrpccommlayer/shared/GwtRpcCommLayerPojoConstants.java
+END
+GwtRpcCommLayerPojoResponse.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/!svn/ver/8/trunk/gwtrpccommlayer/src/com/seguedevelopment/gwtrpccommlayer/shared/GwtRpcCommLayerPojoResponse.java
+END
