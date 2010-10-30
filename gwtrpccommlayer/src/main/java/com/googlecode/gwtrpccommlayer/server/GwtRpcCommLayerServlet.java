@@ -199,6 +199,8 @@ public class GwtRpcCommLayerServlet extends RemoteServiceServlet
 		while(true)
 		{
 			int len = in.read(buff);
+            //todo:is the ByteArrayOutputStream necessary? could just use: ObjectInputStream input = new ObjectInputStream(in);
+
 			if ( len == -1 )
 			{
 				break;

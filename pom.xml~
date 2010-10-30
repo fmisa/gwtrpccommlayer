@@ -9,10 +9,10 @@
     <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>example</module>
-        <module>example</module>
+        <module>gwtrpccommlayer</module>
     </modules>
     <packaging>pom</packaging>
-    <name>Gwt RPC Communication Layer</name>
+    <name>GRCL Parent</name>
 
     <dependencies>
         <dependency>
