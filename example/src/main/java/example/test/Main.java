@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.googlecode.gwtrpccommlayer.client.GwtRpcCommLayerClient;
+import com.googlecode.gwtrpccommlayer.client.impl.GwtRpcCommLayerClient;
 
 import example.client.GreetingService;
 import example.client.GreetingServiceAsync;

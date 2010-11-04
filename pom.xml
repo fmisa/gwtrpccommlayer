@@ -10,6 +10,7 @@
     <modules>
         <module>example</module>
         <module>gwtrpccommlayer</module>
+        <module>gwtp-extension</module>
     </modules>
     <packaging>pom</packaging>
     <name>GRCL Parent</name>
@@ -49,16 +50,7 @@
             <artifactId>gwt-user</artifactId>
             <version>2.0.3</version>
         </dependency>
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-servlet</artifactId>
-            <version>2.0</version>
-        </dependency>
+
 
 
         <!--        <dependency>

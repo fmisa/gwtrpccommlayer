@@ -14,8 +14,11 @@
 package com.googlecode.gwtrpccommlayer.shared;
 
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Abstracts the Request made from the GwtRpcCommLayer-Client
@@ -32,6 +35,10 @@ public class GwtRpcCommLayerPojoRequest implements Serializable
 	private ArrayList<Serializable> methodParameters 	= null;
 	private String methodName							= null;
 	private HashMap<String,String> metaData 			= null;
+
+    //Need to set method parameter classes
+    private List<String> lstParamClassNames = new LinkedList<String>();
+
 	
 	public GwtRpcCommLayerPojoRequest()
 	{
@@ -86,5 +93,18 @@ public class GwtRpcCommLayerPojoRequest implements Serializable
 	{
 		return metaData;
 	}
+
+    public void setMethod(Method method) {
+        setMethodName(method.getName());
+        Class<?>[] classes;
+        classes = method.getParameterTypes();
+        for (Class<?> clazz: classes) {
+           lstParamClassNames.add(clazz.getCanonicalName());
+        }
+    }
+
+    public List<String> getParameterClassNames() {
+        return lstParamClassNames;
+    }
 	
 }

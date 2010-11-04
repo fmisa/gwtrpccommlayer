@@ -14,27 +14,21 @@
 package com.googlecode.gwtrpccommlayer.server;
 
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
 import com.googlecode.gwtrpccommlayer.shared.GwtRpcCommLayerPojoConstants;
 import com.googlecode.gwtrpccommlayer.shared.GwtRpcCommLayerPojoRequest;
 import com.googlecode.gwtrpccommlayer.shared.GwtRpcCommLayerPojoResponse;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.LinkedList;
 
 /**
  * This class can either sit above your servlet (i.e. your servlet extends this) or it can wrap
@@ -50,13 +44,15 @@ public class GwtRpcCommLayerServlet extends RemoteServiceServlet
 	Object servletInstance = null;
     //@Inject(optional=true) @Named(GwtRpcCommLayerPojoConstants.GWT_RPC_COMM_LAYER_SERVLET_IMPL_CLASS)
     //Servlet servletImplementation;
-    Object servletImplementation = null;
+    //Object servletImplementation = null;
 
     public GwtRpcCommLayerServlet() { }
     //@Inject
 	public GwtRpcCommLayerServlet(Object servletImplementation)
 	{
-        this.servletImplementation = servletImplementation;
+        this.servletInstance = servletImplementation;
+
+        //this.servletImplementation = servletImplementation;
 	}
 	
 	/**
@@ -81,14 +77,13 @@ public class GwtRpcCommLayerServlet extends RemoteServiceServlet
 
 		String servletImplClassName = config.getInitParameter(GwtRpcCommLayerPojoConstants.GWT_RPC_COMM_LAYER_SERVLET_IMPL_CLASS);
         //Use guice injected name instead of init parameter
-        if ( servletImplementation != null)
-		//if ( servletImplClassName != null && !servletImplClassName.trim().equals(""))
+        //if ( servletImplementation != null)
+		if ( servletImplClassName != null && !servletImplClassName.trim().equals(""))
 		{
 			try
 			{
-				//Class clzz = Class.forName(servletImplClassName);
-				//servletInstance = clzz.newInstance();
-                servletInstance = servletImplementation;
+				Class clzz = Class.forName(servletImplClassName);
+				servletInstance = clzz.newInstance();
 			}
 			catch(Throwable t)
 			{
@@ -315,17 +310,26 @@ public class GwtRpcCommLayerServlet extends RemoteServiceServlet
 	 * @return
 	 * @throws NoSuchMethodException
 	 */
-	protected Method getMethod(GwtRpcCommLayerPojoRequest stressTestRequest) throws NoSuchMethodException
-	{
+	protected Method getMethod(GwtRpcCommLayerPojoRequest stressTestRequest) throws NoSuchMethodException, ClassNotFoundException {
 		int count = 0;
 		Class<?> paramClasses[] = new Class[stressTestRequest.getMethodParameters().size()];
-		for (Object obj : stressTestRequest.getMethodParameters()) 
+
+/*		for (Object obj : stressTestRequest.getMethodParameters())
 		{
+			//todo: Bug.  We want the original method specification, not the polymorphic variable classes
 			paramClasses[count] = obj.getClass();
 			count++;
 		}
-		return getClass().getMethod(stressTestRequest.getMethodName(), paramClasses);
-	}
+		return getClass().getMethod(stressTestRequest.getMethodName(), paramClasses);*/
+
+        LinkedList<Class<?>> lstParameterClasses = new LinkedList<Class<?>>();
+        for (String methodName: stressTestRequest.getParameterClassNames()) {
+            lstParameterClasses.add(Class.forName(methodName));
+        }
+
+        Class[] arrParameterClasses = lstParameterClasses.toArray(new Class[0]);
+        return getClass().getMethod(stressTestRequest.getMethodName(), arrParameterClasses);
+    }
 	
 	/**
 	 * 

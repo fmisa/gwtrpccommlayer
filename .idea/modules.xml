@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gwtp-extension/gwtp-extension.iml" filepath="$PROJECT_DIR$/gwtp-extension/gwtp-extension.iml" />
       <module fileurl="file://$PROJECT_DIR$/gwtrpccommlayer/gwtrpccommlayer.iml" filepath="$PROJECT_DIR$/gwtrpccommlayer/gwtrpccommlayer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/gwtrpccommlayer/gwtrpccommlayer (1) (com.googlecode).iml" filepath="$PROJECT_DIR$/gwtrpccommlayer/gwtrpccommlayer (1) (com.googlecode).iml" />
       <module fileurl="file://$PROJECT_DIR$/gwtrpccommlayer-parent.iml" filepath="$PROJECT_DIR$/gwtrpccommlayer-parent.iml" />
     </modules>
   </component>
