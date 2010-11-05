@@ -22,7 +22,7 @@
     <distributionManagement>
         <repository>
             <id>server</id>
-<!--            <url>http://danbillings.dnsalias.com:8081/artifactory/libs-releases-local</url>-->
+            <!--            <url>http://danbillings.dnsalias.com:8081/artifactory/libs-releases-local</url>-->
             <url>http://danbillings.dnsalias.com:8081/artifactory/libs-snapshots-local</url>
         </repository>
     </distributionManagement>
@@ -86,6 +86,14 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>1.0</version>
+                <configuration>
+                    <connectionType>developerConnection</connectionType>
                 </configuration>
             </plugin>
         </plugins>
