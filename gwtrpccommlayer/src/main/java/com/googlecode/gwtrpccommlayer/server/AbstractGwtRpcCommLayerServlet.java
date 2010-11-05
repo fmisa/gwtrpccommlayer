@@ -36,37 +36,38 @@ import java.util.LinkedList;
  * @author jeff mchugh
  *
  */
-public class GwtRpcCommLayerServlet extends RemoteServiceServlet
+public abstract class AbstractGwtRpcCommLayerServlet extends RemoteServiceServlet
 {
-	
+
 	private static final long	serialVersionUID	= -8829760243946113688L;
 
 	Object servletInstance = null;
 
-    public GwtRpcCommLayerServlet() { }
+    public AbstractGwtRpcCommLayerServlet() { }
     //@Inject
     //Can be extended and injected Guice
-	public GwtRpcCommLayerServlet(Object servletImplementation)
+
+	public AbstractGwtRpcCommLayerServlet(Object servletImplementation)
 	{
         this.servletInstance = servletImplementation;
 
         //this.servletImplementation = servletImplementation;
 	}
-	
+
 	/**
 	 * Initializes the servlet
 	 */
 	public void init(ServletConfig config) throws ServletException
 	{
 		super.init(config);
-		
-		
+
+
 		/*
 		 * The default is to assume this instance is the selected servlet
 		 */
 		servletInstance = this;
-		
-		
+
+
 		/*
 		 * Check to see another servlet should be the target
 		 */
@@ -89,10 +90,10 @@ public class GwtRpcCommLayerServlet extends RemoteServiceServlet
 			}
 		}
 	}
-	
-	
+
+
 	/**
-	 * any servlet that extends can opt to deny these request 
+	 * any servlet that extends can opt to deny these request
 	 * either explicitly or using web.xml
 	 * @return
 	 */
@@ -110,25 +111,25 @@ public class GwtRpcCommLayerServlet extends RemoteServiceServlet
 		if ( super.perThreadResponse == null )
 		{
 			super.perThreadResponse = new ThreadLocal<HttpServletResponse>();
-		}		
+		}
 	}
-	
-	
+
+
 	/**
 	 * Override the main service call and implement the special handling here
 	 */
 	public void service(ServletRequest req, ServletResponse resp) throws ServletException, IOException
 	{
-		
+
 		HttpServletRequest request 		= (HttpServletRequest) req;
 		HttpServletResponse response 	= (HttpServletResponse) resp;
-	    
+
 		/*
 		 * If the GwtRpcCommLayerClient has made this request, this header should be provided
 		 */
 		String gwtClientUserAgent 		= request.getHeader(GwtRpcCommLayerPojoConstants.GWT_RPC_COMM_LAYER_CLIENT_KEY);
-	    
-		
+
+
 		/*
 		 * Only execute this block if:
 		 *  - allowGwtRpcPojoRequest() is true
@@ -145,21 +146,21 @@ public class GwtRpcCommLayerServlet extends RemoteServiceServlet
 
 				/*
 				 * This might not be initialized.
-				 * So do it if needed 
+				 * So do it if needed
 				 */
 				initalizePerRequestPerResponseIfNeeded();
-				
+
 				super.perThreadRequest.set(request);
 			    super.perThreadResponse.set(response);
-			    
+
 				doServicePojoRequest(request,response);
 			}
 			finally
 			{
 			    super.perThreadRequest.set(null);
-			    super.perThreadResponse.set(null);				
+			    super.perThreadResponse.set(null);
 			}
-			
+
 		}
 		else
 		{
@@ -170,66 +171,20 @@ public class GwtRpcCommLayerServlet extends RemoteServiceServlet
 			super.service(req, resp);
 		}
 	}
-	
+
 	/**
 	 * Reads the request's InputStream and cast it to the correct Object type(s)
 	 * @param req
 	 * @param resp
-	 * @throws ServletException
-	 * @throws IOException
+	 * @throws javax.servlet.ServletException
+	 * @throws java.io.IOException
 	 */
-	public void doServicePojoRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-	{
-		/*
-		 * The bytes that have been provided as the "POST" data
-		 * represent a serialized POJO
-		 * 
-		 * read it and store it into a buffer (ByteArrayOutputStream)
-		 */
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		InputStream in = req.getInputStream();
-		byte[] buff = new byte[1024];
-		while(true)
-		{
-			int len = in.read(buff);
-            //todo:is the ByteArrayOutputStream necessary? could just use: ObjectInputStream input = new ObjectInputStream(in);
+	protected abstract void doServicePojoRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException;
 
-			if ( len == -1 )
-			{
-				break;
-			}
-			bos.write(buff, 0, len);
-		}
-		
-		
-		if ( bos.toByteArray().length > 0 )
-		{
-			try
-			{
-				ObjectInputStream objIn = new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray()));
-				Serializable ser = (Serializable) objIn.readObject();
-				if ( ser instanceof GwtRpcCommLayerPojoRequest)
-				{
-					GwtRpcCommLayerPojoRequest rpcPojoReq = (GwtRpcCommLayerPojoRequest) ser;
-					executePojoRequest(rpcPojoReq, req, resp);
-				}
-				else
-				{
-					throw new ServletException("POST data does not cast to an instance of GwtRpcCommLayerPojoRequest");
-				}
-			}
-			catch(Throwable t)
-			{
-				throw new ServletException("Exception thrown executing pojo request.", t);
-			}
-		}
-		else
-		{
-			throw new ServletException("POST data does not contain any serialized bytes.");
-		}
-		
-	}
-	
+    protected Object getImplementation() {
+       return this.servletInstance;
+    }
+
 	/**
 	 * Execute the actual method within the GwtRpc servlet
 	 * @param pojoRequest
@@ -245,18 +200,18 @@ public class GwtRpcCommLayerServlet extends RemoteServiceServlet
 			 * extract the appropriate method
 			 */
 			Method method = getMethod(pojoRequest);
-			
+
 			/*
 			 * invoke the method
 			 */
 			Object returnedInstance = invokeMethod(pojoRequest, method);
-			
+
 			/*
 			 * wrap response within a response object
 			 */
 			GwtRpcCommLayerPojoResponse pojoResp = new GwtRpcCommLayerPojoResponse();
 			pojoResp.setResponseInstance( (Serializable) returnedInstance);
-			
+
 			/*
 			 * send back the result as a stream set of bytes
 			 */
@@ -278,14 +233,14 @@ public class GwtRpcCommLayerServlet extends RemoteServiceServlet
 			resp.sendError(500, e.toString() );
 		}
 	}
-	
+
 	/**
 	 * Write the appropriate response
 	 * @param req
 	 * @param resp
 	 * @param pojoRequest
 	 * @param pojoResp
-	 * @throws IOException
+	 * @throws java.io.IOException
 	 */
 	protected void serializeResponse(HttpServletRequest req, HttpServletResponse resp, GwtRpcCommLayerPojoRequest pojoRequest, GwtRpcCommLayerPojoResponse pojoResp) throws IOException
 	{
@@ -294,16 +249,16 @@ public class GwtRpcCommLayerServlet extends RemoteServiceServlet
 		objOut.writeObject(pojoResp);
 		objOut.flush();
 		objOut.close();
-		
+
 		resp.setContentType("binary/octet-stream");
 		resp.setContentLength(bos.toByteArray().length);
 		OutputStream out = resp.getOutputStream();
 		out.write(bos.toByteArray());
 		out.flush();
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param stressTestRequest
 	 * @return
 	 * @throws NoSuchMethodException
@@ -320,13 +275,13 @@ public class GwtRpcCommLayerServlet extends RemoteServiceServlet
         Class[] arrParameterClasses = lstParameterClasses.toArray(new Class[0]);
         return getClass().getMethod(stressTestRequest.getMethodName(), arrParameterClasses);
     }
-	
+
 	/**
-	 * 
+	 *
 	 * @param stressTestRequest
 	 * @param method
 	 * @return
-	 * @throws InvocationTargetException
+	 * @throws java.lang.reflect.InvocationTargetException
 	 * @throws IllegalAccessException
 	 */
 	protected Object invokeMethod(GwtRpcCommLayerPojoRequest stressTestRequest, Method method) throws InvocationTargetException, IllegalAccessException
