@@ -18,7 +18,8 @@
     <distributionManagement>
         <repository>
             <id>server</id>
-            <url>http://danbillings.dnsalias.com:8081/artifactory/libs-releases-local</url>
+<!--            <url>http://danbillings.dnsalias.com:8081/artifactory/libs-releases-local</url>-->
+            <url>http://danbillings.dnsalias.com:8081/artifactory/libs-snapshots-local</url>
         </repository>
     </distributionManagement>
     <dependencies>
