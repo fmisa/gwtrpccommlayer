@@ -163,7 +163,7 @@
       <file leaf-file-name="GwtRpcCommLayerPojoRequest.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gwtrpccommlayer/src/main/java/com/googlecode/gwtrpccommlayer/shared/GwtRpcCommLayerPojoRequest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="4" selection-start="1735" selection-end="1735" vertical-scroll-proportion="0.29616725">
+            <state line="50" column="6" selection-start="1549" selection-end="1549" vertical-scroll-proportion="0.20731707">
               <folding />
             </state>
           </provider>
@@ -1162,7 +1162,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gwtrpccommlayer/src/main/java/com/googlecode/gwtrpccommlayer/shared/GwtRpcCommLayerPojoRequest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="4" selection-start="1735" selection-end="1735" vertical-scroll-proportion="0.29616725">
+        <state line="50" column="6" selection-start="1549" selection-end="1549" vertical-scroll-proportion="0.20731707">
           <folding />
         </state>
       </provider>
