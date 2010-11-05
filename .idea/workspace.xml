@@ -116,19 +116,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="32" selection-start="476" selection-end="476" vertical-scroll-proportion="0.0">
+            <state line="27" column="28" selection-start="1216" selection-end="1216" vertical-scroll-proportion="0.29955947">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gwtrpccommlayer/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="70" column="33" selection-start="2591" selection-end="2591" vertical-scroll-proportion="0.011453745">
+            <state line="0" column="0" selection-start="0" selection-end="930" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -190,8 +190,8 @@
         <option value="$PROJECT_DIR$/gwtrpccommlayer/src/test/java/com/googlecode/gwtrpccommlayer/client/impl/GwtRpcServiceImplTest.java" />
         <option value="$PROJECT_DIR$/gwtrpccommlayer/src/main/java/com/googlecode/gwtrpccommlayer/client/impl/GwtRpcClientSideProxy.java" />
         <option value="$PROJECT_DIR$/gwtrpccommlayer/src/main/java/com/googlecode/gwtrpccommlayer/shared/GwtRpcCommLayerPojoRequest.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/gwtrpccommlayer/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
@@ -1080,16 +1080,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="file://$PROJECT_DIR$/gwtrpccommlayer/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="32" selection-start="476" selection-end="476" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="930" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gwtrpccommlayer/pom.xml">
+    <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="33" selection-start="2591" selection-end="2591" vertical-scroll-proportion="0.011453745">
+        <state line="27" column="28" selection-start="1216" selection-end="1216" vertical-scroll-proportion="0.29955947">
           <folding />
         </state>
       </provider>

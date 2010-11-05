@@ -16,11 +16,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <scm>
-        <connection>scm:hg:https://gwtrpccommlayer.googlecode.com/hg</connection>
-        <developerConnection>scm:hg:https://gwtrpccommlayer.googlecode.com/hg</developerConnection>
-        <url>http://code.google.com/p/gwtrpccommlayer</url>
-    </scm>
+
 
     <dependencies>
 

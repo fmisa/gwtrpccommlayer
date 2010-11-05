@@ -14,7 +14,11 @@
     </modules>
     <packaging>pom</packaging>
     <name>GRCL Parent</name>
-
+    <scm>
+        <connection>scm:hg:https://gwtrpccommlayer.googlecode.com/hg</connection>
+        <developerConnection>scm:hg:https://gwtrpccommlayer.googlecode.com/hg</developerConnection>
+        <url>http://code.google.com/p/gwtrpccommlayer</url>
+    </scm>
     <distributionManagement>
         <repository>
             <id>server</id>
