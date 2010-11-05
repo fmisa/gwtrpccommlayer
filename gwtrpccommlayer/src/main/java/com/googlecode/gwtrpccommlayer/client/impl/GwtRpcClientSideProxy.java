@@ -14,20 +14,10 @@
 package com.googlecode.gwtrpccommlayer.client.impl;
 
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-
-
-
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.googlecode.gwtrpccommlayer.shared.GwtRpcCommLayerPojoConstants;
+import com.googlecode.gwtrpccommlayer.shared.GwtRpcCommLayerPojoRequest;
+import com.googlecode.gwtrpccommlayer.shared.GwtRpcCommLayerPojoResponse;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -36,10 +26,12 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.googlecode.gwtrpccommlayer.shared.GwtRpcCommLayerPojoConstants;
-import com.googlecode.gwtrpccommlayer.shared.GwtRpcCommLayerPojoRequest;
-import com.googlecode.gwtrpccommlayer.shared.GwtRpcCommLayerPojoResponse;
+import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * This class handles all the HTTP(S) client interaction with the GwtRpcCommLayer Servlet
@@ -450,8 +442,7 @@ public class GwtRpcClientSideProxy implements IGwtRpcClientSideProxy
 	
 	/**
 	 * Called in the event of an general error outside of the http protocol
-	 * @param errorCode
-	 * @param response
+	 * @param error
 	 */
 	protected void onResponseError(String error)
 	{	
@@ -605,17 +596,22 @@ public class GwtRpcClientSideProxy implements IGwtRpcClientSideProxy
 		{
 			try
 			{
-				if ( this.result != null )
+                if ( this.caughtThrowable != null )
+            {
+                this.callback.onFailure(this.caughtThrowable);
+            }
+				else if ( this.result != null )
 				{
 					this.callback.onSuccess(this.result);
 				}
-				else if ( this.caughtThrowable != null )
-				{
-					this.callback.onFailure(this.caughtThrowable);
-				}
 				else
 				{
-					throw new RuntimeException("Both 'success' and 'failure' payload objects are null. This should never occur.");
+                    //we hope the client wanted a Void.  may still be a bug.
+                    Constructor<Void> cv = Void.class.getDeclaredConstructor();
+                    cv.setAccessible(true);
+                    Void v = cv.newInstance();
+                    //nasty!
+                    this.callback.onSuccess((T) v);
 				}
 			}
 			catch(Throwable caught)

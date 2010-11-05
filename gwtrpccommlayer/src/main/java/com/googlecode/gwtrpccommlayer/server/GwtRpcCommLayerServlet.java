@@ -314,14 +314,6 @@ public class GwtRpcCommLayerServlet extends RemoteServiceServlet
 		int count = 0;
 		Class<?> paramClasses[] = new Class[stressTestRequest.getMethodParameters().size()];
 
-/*		for (Object obj : stressTestRequest.getMethodParameters())
-		{
-			//todo: Bug.  We want the original method specification, not the polymorphic variable classes
-			paramClasses[count] = obj.getClass();
-			count++;
-		}
-		return getClass().getMethod(stressTestRequest.getMethodName(), paramClasses);*/
-
         LinkedList<Class<?>> lstParameterClasses = new LinkedList<Class<?>>();
         for (String methodName: stressTestRequest.getParameterClassNames()) {
             lstParameterClasses.add(Class.forName(methodName));

@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public interface TestService {
     public void easy();
-    public void medium(String test, Integer another) throws Exception;
-    public String mediumHard(String test);
-    public <E> Set<E> hard(Set<E> input);
+    public void multipleArgs(String test, Integer another) throws Exception;
+    public String echoSimple(String test);
+    public <E> Set<E> echoGeneric(Set<E> input);
 }

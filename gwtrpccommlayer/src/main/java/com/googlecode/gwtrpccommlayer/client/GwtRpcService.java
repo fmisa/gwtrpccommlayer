@@ -1,5 +1,6 @@
 package com.googlecode.gwtrpccommlayer.client;
 
+import com.google.inject.Guice;
 import org.apache.http.cookie.Cookie;
 
 import java.net.URL;
@@ -15,6 +16,17 @@ import java.util.Collection;
  * Time: 2:52 PM
  */
 public interface GwtRpcService {
+
+    public interface Factory {
+        GwtRpcService newInstance();
+    }
+
+    public static final Factory FACTORY = new Factory() {
+        @Override
+        public GwtRpcService newInstance() {
+            return Guice.createInjector(new Module()).getInstance(GwtRpcService.class);
+        }
+    };
 
     /**
      * This weakly specified generic T kinda sucks because the "async" GWT interface is not identified by anything.

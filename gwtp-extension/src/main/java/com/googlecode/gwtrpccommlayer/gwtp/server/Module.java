@@ -27,6 +27,5 @@ public class Module extends ServletModule {
         install(new DispatchModule());
         serve("/" + strModuleName + "/" + ActionImpl.DEFAULT_SERVICE_NAME);
 
-
     }
 }

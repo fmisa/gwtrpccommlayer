@@ -23,17 +23,17 @@ public class SomeServlet extends GwtRpcCommLayerServlet implements TestService{
     }
 
     @Override
-    public void medium(String test, Integer another) throws Exception {
+    public void multipleArgs(String test, Integer another) throws Exception {
         throw new Exception("whatever");
     }
 
     @Override
-    public String mediumHard(String test) {
+    public String echoSimple(String test) {
         return test;
     }
 
     @Override
-    public <E> Set<E> hard(Set<E> input) {
+    public <E> Set<E> echoGeneric(Set<E> input) {
         hardCountdownLatch.countDown();
         return input;
     }

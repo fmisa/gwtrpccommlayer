@@ -13,6 +13,8 @@
  */
 package com.googlecode.gwtrpccommlayer.shared;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
+
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -97,9 +99,10 @@ public class GwtRpcCommLayerPojoRequest implements Serializable
     public void setMethod(Method method) {
         setMethodName(method.getName());
         Class<?>[] classes;
-        classes = method.getParameterTypes();
-        for (Class<?> clazz: classes) {
-           lstParamClassNames.add(clazz.getCanonicalName());
+        for (Class<?> clazz: method.getParameterTypes()) {
+            //todo: nasty hack, we know enough to clean this up
+            if (clazz != AsyncCallback.class)
+             lstParamClassNames.add(clazz.getCanonicalName());
         }
     }
 

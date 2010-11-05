@@ -1,11 +1,10 @@
 package example.server;
 
-import java.util.ArrayList;
-
 import com.googlecode.gwtrpccommlayer.server.GwtRpcCommLayerServlet;
-
 import example.client.GreetingService;
 import example.shared.UserFormData;
+
+import java.util.ArrayList;
 
 /**
  * The server side implementation of the RPC service.
@@ -13,7 +12,6 @@ import example.shared.UserFormData;
 @SuppressWarnings("serial")
 public class GreetingServiceImpl extends GwtRpcCommLayerServlet/*RemoteServiceServlet*/ implements GreetingService
 {
-
 	ArrayList<UserFormData> list = new ArrayList<UserFormData>();
 	
 	@Override

@@ -1,5 +1,6 @@
 package com.googlecode.gwtrpccommlayer.client.impl;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.internal.Preconditions;
@@ -68,18 +69,33 @@ public class GwtRpcServiceImplTest {
         server.start();
 
         GwtRpcService service = injector.getInstance(GwtRpcService.class);
+        //Create our proxy-based service using GwtRpcService
         TestService testService = service.create(new URL("http://localhost:" + PORT), TestService.class);
 
+        //Run Synchronous Tests
         testService.easy();
-        try { testService.medium(null, null); Assert.fail(); } catch(Exception e) { }
+        try { testService.multipleArgs(null, null); Assert.fail(); } catch(Exception e) { }
         String test = "test";
-        Assert.assertEquals(test, testService.mediumHard(test));
+        Assert.assertEquals(test, testService.echoSimple(test));
 
         Set<String> set = new TreeSet<String>();
         set.add("test");
 
-        //BUG
-        Assert.assertEquals(set, testService.hard(set));
+        Assert.assertEquals(set, testService.echoGeneric(set));
+
+        //Run Asynchronous Tests
+        TestServiceAsync serviceAsync = service.create(new URL("http://localhost:" + PORT), TestServiceAsync.class);
+        serviceAsync.easy(new AsyncCallback<Void>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                Assert.assertNotNull(throwable);
+            }
+
+            @Override
+            public void onSuccess(Void aVoid) {
+                Assert.assertNotNull(aVoid);
+            }
+        });
 
         server.stop();
     }
@@ -95,6 +111,12 @@ public class GwtRpcServiceImplTest {
         List<Cookie> lstCookies = mock(List.class);
         testService =service.create(mockUrl, TestService.class, lstCookies);
         Preconditions.checkNotNull(testService);
+    }
+
+    @Test
+    public void testCreateUsingGuiceOrFactoryMethod() {
+        //GwtRpcService serviceByFactory = GwtRpcService.F
+
     }
 
 
