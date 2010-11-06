@@ -20,23 +20,33 @@
             <artifactId>gwtrpccommlayer</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
     </dependencies>
 
     <build>
+<!--        <outputDirectory>
+            ${project.build.directory}/${project.build.finalName}
+        </outputDirectory>-->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1-beta-1</version>
                 <configuration>
-
+                    <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
                 </configuration>
             </plugin><plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
                 <version>2.1.0</version>
+            <executions>
+                <execution>
+                    <goals>
+                    </goals>
+                </execution>
+            </executions>
                 <configuration>
+                    <buildOutputDirectory>${project.build.directory}/${project.build.finalName}</buildOutputDirectory>
+                    <hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
                     <runTarget>Example.html</runTarget>
                 </configuration>
             </plugin><plugin>

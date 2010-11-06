@@ -13,15 +13,15 @@
  */
 package example.test;
 
-import java.net.URL;
-import java.util.ArrayList;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.googlecode.gwtrpccommlayer.client.GwtRpcService;
 import com.googlecode.gwtrpccommlayer.client.impl.GwtRpcCommLayerClient;
-
 import example.client.GreetingService;
 import example.client.GreetingServiceAsync;
 import example.shared.UserFormData;
+
+import java.net.URL;
+import java.util.ArrayList;
 
 public class Main
 {
@@ -32,15 +32,17 @@ public class Main
 
 	public void doAsynchronousCalls() throws Exception
 	{
+        GwtRpcService service = GwtRpcService.FACTORY.newInstance();
 		System.out.println("doAsynchronousCalls --Start--");
 		
 		URL url = new URL("http://127.0.0.1:8888/example/greet?gwt.codesvr=127.0.0.1:9997");
-		GwtRpcCommLayerClient client = new GwtRpcCommLayerClient(url);
+		//GwtRpcCommLayerClient client = new GwtRpcCommLayerClient(url);
 		
 		/*
 		 * NOTE: to make use of asynchronous mode, pass in your GWT asynch class
 		 */
-		GreetingServiceAsync stub = (GreetingServiceAsync) client.createRemoteServicePojoProxy(GreetingServiceAsync.class);
+		//GreetingServiceAsync stub = (GreetingServiceAsync) client.createRemoteServicePojoProxy(GreetingServiceAsync.class);
+        GreetingServiceAsync stub = service.create(url, GreetingServiceAsync.class);
 		
 
 		/*

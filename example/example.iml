@@ -7,11 +7,11 @@
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/annotations" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
-      <excludeFolder url="file://$MODULE_DIR$/${project}" />
+      <excludeFolder url="file://$MODULE_DIR$/$" />
+      <excludeFolder url="file://$MODULE_DIR$/${projec}" />
       <excludeFolder url="file://$MODULE_DIR$/target/.generated" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/example-0.0.1-SNAPSHOT" />
-      <excludeFolder url="file://$MODULE_DIR$/target/maven-archiver" />
       <excludeFolder url="file://$MODULE_DIR$/target/war" />
     </content>
     <orderEntry type="inheritedJdk" />
