@@ -15,7 +15,6 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.net.URL;
@@ -43,7 +42,6 @@ public class GwtRpcServiceImplTest {
     }
 
 
-    @Ignore
     @Test
     public void integration() throws Exception {
                Server server = new Server(PORT);

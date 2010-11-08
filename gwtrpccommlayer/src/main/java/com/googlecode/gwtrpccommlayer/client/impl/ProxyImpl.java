@@ -3,6 +3,7 @@ package com.googlecode.gwtrpccommlayer.client.impl;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import com.googlecode.gwtrpccommlayer.client.function.ResponseSerializer;
 import com.googlecode.gwtrpccommlayer.shared.GwtRpcCommLayerPojoConstants;
 import com.googlecode.gwtrpccommlayer.shared.GwtRpcCommLayerPojoRequest;
 import com.googlecode.gwtrpccommlayer.shared.GwtRpcCommLayerPojoResponse;
@@ -14,6 +15,7 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import javax.xml.ws.Response;
 import java.io.*;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -35,22 +37,12 @@ public class ProxyImpl implements IGwtRpcClientSideProxy{
 
 
 	private boolean showResponseHeaders = false;
+    private final ResponseSerializer responseSerializer;
     private URL url;
 
-    public ProxyImpl()
-	{
-		cookies = new HashMap<String, Cookie>();
-	}
-
-	public ProxyImpl(URL url)
-	{
-		this();
-
-        this.url = url;
-    }
-
     @Inject
-    public ProxyImpl(URL url, @Assisted HashMap<String,Cookie> cookies) {
+    public ProxyImpl(ResponseSerializer responseSerializer, URL url, @Assisted HashMap<String,Cookie> cookies) {
+        this.responseSerializer = responseSerializer;
         this.url = url;
         this.cookies = cookies;
     }
@@ -262,6 +254,7 @@ public class ProxyImpl implements IGwtRpcClientSideProxy{
 		 */
         onBeforeRequest(httppost);
         HttpResponse response = httpclient.execute(httppost);
+        //return
 
         /*
          * Provide a call back for timing, error handling, etc

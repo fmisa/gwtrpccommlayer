@@ -120,6 +120,7 @@ public abstract class AbstractGwtRpcCommLayerServlet extends RemoteServiceServle
 	 */
 	public void service(ServletRequest req, ServletResponse resp) throws ServletException, IOException
 	{
+        //need some function intercept <ServletRequest,Boolean>
 
 		HttpServletRequest request 		= (HttpServletRequest) req;
 		HttpServletResponse response 	= (HttpServletResponse) resp;

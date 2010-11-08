@@ -47,6 +47,7 @@
                 <configuration>
                     <buildOutputDirectory>${project.build.directory}/${project.build.finalName}</buildOutputDirectory>
                     <hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
+                    <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
                     <runTarget>Example.html</runTarget>
                 </configuration>
             </plugin><plugin>
