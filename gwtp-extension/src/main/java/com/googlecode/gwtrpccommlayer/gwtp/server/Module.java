@@ -1,6 +1,9 @@
 package com.googlecode.gwtrpccommlayer.gwtp.server;
 
+import com.google.inject.Scopes;
 import com.google.inject.servlet.ServletModule;
+import com.gwtplatform.dispatch.server.Dispatch;
+import com.gwtplatform.dispatch.server.DispatchImpl;
 import com.gwtplatform.dispatch.server.guice.DispatchModule;
 import com.gwtplatform.dispatch.shared.ActionImpl;
 
@@ -12,20 +15,19 @@ import com.gwtplatform.dispatch.shared.ActionImpl;
  */
 public class Module extends ServletModule {
 
-    private String strModuleName;
 
     /**
-     * cannot use Inject because we are creating Modules!
-     * @param moduleName
      */
-    public Module(String moduleName){
-        this.strModuleName = moduleName;
+    public Module(){
     }
 
     @Override
     protected void configureServlets() {
         install(new DispatchModule());
-        serve("/" + strModuleName + "/" + ActionImpl.DEFAULT_SERVICE_NAME);
+        serve("/" + ActionImpl.DEFAULT_SERVICE_NAME).with(DispatchingPOJOServlet.class);
+        bind(DispatchingPOJOServlet.class).in(Scopes.SINGLETON);
+
+        //bind(Dispatch.class).to(DispatchImpl.class);
 
     }
 }

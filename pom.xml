@@ -24,6 +24,7 @@
         <repository>
             <id>server</id>
             <!--            <url>http://danbillings.dnsalias.com:8081/artifactory/libs-releases-local</url>-->
+            <!--         WARNING: SUBJECT TO CHANGE -->
             <url>http://danbillings.dnsalias.com:8081/artifactory/libs-snapshots-local</url>
         </repository>
     </distributionManagement>

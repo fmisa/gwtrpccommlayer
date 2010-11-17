@@ -11,14 +11,10 @@ import com.google.inject.servlet.GuiceServletContextListener;
  * Time: 2:59 PM
  */
 public class GuiceListener extends GuiceServletContextListener {
-    private String strName;
 
-    public GuiceListener(String strName) {
-        this.strName = strName;
-    }
 
     @Override
     protected Injector getInjector() {
-        return Guice.createInjector(new Module(this.strName));
+        return Guice.createInjector(new Module());
     }
 }
